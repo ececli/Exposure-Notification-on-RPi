@@ -12,6 +12,17 @@ Then, run the bash script by typing `./ContractTracing_BLE.sh`
 
 Done!
 
+## Current Issue(s)
+
+### 1. (4/27/2020) The BLE may die after running a while. The during before it dies is random. 
+
+I have found that the first error usually comes from the Python, i.e., the scanning function. The error code is
+
+`bluepy.btle.BTLEManagementError: Failed to execute management command 'scanend' (code: 3, error: Failed)`
+
+By checking the bluepy source code, the error is from Line 854 to Line 803 to Line 312, and it occurs when running `scan.stop()`. 
+
+My current solution is to reset the BLE by using `sudo hciconfig hci0 reset` when the error happens. It looks that most of time this action fixed the problem and the BLE can run again. However, there is also some time that the BLE is totally dead after the error.
 
 ## To do List
 

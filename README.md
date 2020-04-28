@@ -24,7 +24,7 @@ Done!
 
 ## Current Issue(s)
 
-### 1. (4/27/2020) The BLE may die after running a while. The during before it dies is random. 
+### 1. (updated 4/28) The BLE may die after running a while. The during before it dies is random. 
 
 I have found that the first error usually comes from the Python, i.e., the scanning function. The error code is
 

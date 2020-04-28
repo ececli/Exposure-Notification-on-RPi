@@ -19,6 +19,37 @@ getTXPower(){
     fi
 }
 
+Advertising(){
+
+    echo "BLE Advertising - Start"
+    int=1
+    while(( $int<$TIMEOUT ))
+    do
+        echo "Trial number" $int
+        sudo hciconfig $BLE_DEVICE noscan
+        Var1=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 00)
+        Var2=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x006 $MIN_INTV $MAX_INTV $ADV_NONCONN_IND 00 00 00 00 00 00 00 00 $ADV_CHANNEL 00)
+        Var3=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x008 1f 02 01 1a 03 03 $SERVICE_UUID 17 16 $SERVICE_UUID $PRI $VERSION $TXPower 00 00)
+        Var4=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 01)
+
+        if checkResult "$Var1" -a checkResult "$Var2" -a checkResult "$Var3" -a checkResult "$Var4";
+        # if checkResult "$Var2" -a checkResult "$Var3" -a checkResult "$Var4";
+        then
+            echo "BLE Advertising - Successful"
+            return 0
+        else
+            let "int++"
+            if [ $int == $TIMEOUT ];
+            then
+                echo "BLE Advertising - Unsuccessful (Timeout)"
+                sudo hciconfig $BLE_DEVICE down
+                return 1
+            fi
+        fi
+    done
+
+}
+
 sudo hciconfig $BLE_DEVICE up
 echo "Bluetooth - Power Up"
 Var0=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x007)
@@ -28,33 +59,7 @@ echo "Transmit Power Level" $TXPower
 while true
 do
 
-    echo "BLE Advertising - Start"
-    int=1
-    while(( $int<$TIMEOUT ))
-    do
-        echo "Trial number" $int
-        sudo hciconfig $BLE_DEVICE noscan
-        # Var4=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 01)
-        Var1=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 00)
-        Var2=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x006 $MIN_INTV $MAX_INTV $ADV_NONCONN_IND 00 00 00 00 00 00 00 00 $ADV_CHANNEL 00)
-        Var3=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x008 1b 02 01 1a 03 03 $SERVICE_UUID 13 16 $SERVICE_UUID $PRI)
-        Var4=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 01)
-
-        if checkResult "$Var1" -a checkResult "$Var2" -a checkResult "$Var3" -a checkResult "$Var4";
-        # if checkResult "$Var2" -a checkResult "$Var3" -a checkResult "$Var4";
-        then
-            echo "BLE Advertising - Successful"
-            break
-        else
-            let "int++"
-            if [ $int == $TIMEOUT ];
-            then
-                echo "BLE Advertising - Unsuccessful (Timeout)"
-                sudo hciconfig $BLE_DEVICE down
-            fi
-        fi
-    done
-
+    Advertising
     sleep $SCAN_INTV
     sudo hciconfig $BLE_DEVICE up
     # sudo hciconfig $BLE_DEVICE noleadv

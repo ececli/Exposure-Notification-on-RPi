@@ -22,6 +22,8 @@ Finally, run the bash script by typing `$./ContractTracing_BLE.sh`
 
 Done!
 
+Note: Remember to change the Rolling Proximity Identifier (RPI) for each device. It can be changed in [ContactTracing_BLE.conf](/ContactTracing_BLE.conf) file. If you clone the code to multiple devices but forget to change it, all the records will have the same RPI. But you can still identify different devices via MAC address. 
+
 ## Explain the Output
 
 The program records the information of other BLE devices which use the same service (the Exposure Notification Service). The output is in a .csv file. The format of the csv file is as follows. 

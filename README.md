@@ -6,13 +6,19 @@ Codes and Data for the Exposure Notification on the Raspberry Pi.
 
 I write it here in case I forget how to run it in the future. 
 
-Before running the code, some libraries are needed for Raspberry Pi. I will make a list of them later.
+Before running the code, some libraries are needed for Raspberry Pi. Note that [bluepy](https://github.com/IanHarvey/bluepy) is used in Python 3. 
+```
+$ sudo apt install pi-bluetooth
+$ sudo apt-get install python-pip libglib2.0-dev
+$ sudo pip install bluepy
+```
+I may forget some libraries I installed. I will check the above list again. 
 
 Next, the bash script (.sh) needs to be executable. To achieve this, run
 
-`chmod +x ContractTracing_BLE.sh` 
+`$ chmod +x ContractTracing_BLE.sh` 
 
-Finally, run the bash script by typing `./ContractTracing_BLE.sh`
+Finally, run the bash script by typing `$./ContractTracing_BLE.sh`
 
 Done!
 
@@ -26,7 +32,7 @@ I have found that the first error usually comes from the Python, i.e., the scann
 
 By checking the bluepy source code, the error is from Line 854 to Line 803 to Line 312, and it occurs when running `scan.stop()`. 
 
-My current solution is to reset the BLE by using `sudo hciconfig hci0 reset` when the error happens. It looks that most of time this action fixed the problem and the BLE can run again. However, there is also some time that the BLE is totally dead after the error.
+My current solution is to reset the BLE by using `sudo hciconfig hci0 reset` when the error happens. It looks that this action fixed the problem and the BLE can run again. (4/28 update: After fixing this by resetting the BLE, the devices runs at least a whole day.)
 
 There are some possible solution for this issue (by searching the Internet):
 

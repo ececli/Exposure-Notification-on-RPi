@@ -1,6 +1,8 @@
 # Exposure-Notification-on-RPi
 
-Codes and Data for the Exposure Notification on the Raspberry Pi. 
+## Introduction
+
+Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notification Service, previous is called Contact Tracing, is named by Apple and Google in their [documents](https://www.apple.com/covid19/contacttracing/). The code here implements the Bluetooth Specification from Apple and Google on Raspberry Pis which run Debian-based systems. 
 
 ## How to Run The Codes
 

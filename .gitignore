@@ -1,4 +1,4 @@
 *.log
 *.temp
 *.csv
-/images
+/images/

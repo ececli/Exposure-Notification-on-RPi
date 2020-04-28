@@ -1,4 +1,4 @@
-from bluepy.btle import Scanner
+from bluepy.btle import Scanner, BTLEManagementError
 import csv
 import os
 import time

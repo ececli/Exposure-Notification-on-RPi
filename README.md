@@ -15,9 +15,9 @@ $ sudo pip install bluepy
 I may forget some libraries I installed. I will check the above list again. 
 
 Next, the bash script (.sh) needs to be executable. To achieve this, run
-
-`$ chmod +x ContractTracing_BLE.sh` 
-
+```
+$ chmod +x ContractTracing_BLE.sh
+```
 Finally, run the bash script by typing `$./ContractTracing_BLE.sh`
 
 Done!

@@ -4,11 +4,15 @@ Codes and Data for the Exposure Notification on the Raspberry Pi.
 
 ## How to Run The Codes
 
-I write it here in case I forget how to run it in the future. First, the bash script (.sh) needs to be executable. To achieve this, run
+I write it here in case I forget how to run it in the future. 
+
+Before running the code, some libraries are needed for Raspberry Pi. I will make a list of them later.
+
+Next, the bash script (.sh) needs to be executable. To achieve this, run
 
 `chmod +x ContractTracing_BLE.sh` 
 
-Then, run the bash script by typing `./ContractTracing_BLE.sh`
+Finally, run the bash script by typing `./ContractTracing_BLE.sh`
 
 Done!
 

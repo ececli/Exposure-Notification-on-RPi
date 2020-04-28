@@ -22,6 +22,16 @@ Finally, run the bash script by typing `$./ContractTracing_BLE.sh`
 
 Done!
 
+## Explain the Output
+
+The program records the information of other BLE devices which use the same service (the Exposure Notification Service). The output is in a .csv file. The format of the csv file is as follows. 
+
+<img src="/images/Example_Output_ContactTracing.PNG">
+
+The first column is the [Unix Time](https://en.wikipedia.org/wiki/Unix_time) and its unit is second. The second column is the MAC addresses of the other BLE devices. The third column is the received RSSI (dBm). The fourth column is the Service UUID, and it is 0xFD6F for the Exposure Notification Service. The fifth column is the Rolling Proximity Identifier (RPI), which can be seen as the unique ID of each device. The sixth column is the version of the service. Currently it is 0x40. The next column is the transmit power level (dBm). The hex value 0x0C is 12 in decimal. So it is 12dBm. The last column is reserved for future use. The detailed information about Service UUID and RPI can be found [here](https://www.apple.com/covid19/contacttracing/). 
+
+
+
 ## Current Issue(s)
 
 ### 1. (updated 4/28) The BLE may die after running a while. The during before it dies is random. 

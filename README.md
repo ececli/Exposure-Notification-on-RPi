@@ -30,9 +30,14 @@ There are some possible solution for this issue (by searching the Internet):
 
 2. Power supply. Since the BLE chip will consume more power. But I do not quite believe this. 
 
-## To do List
+## To-do List
 
 1. Revise config file so that both bash script and Python can read and import it.
 2. Change to the absolute path or current path. 
 3. Add function to log the fail events.
-4. Change to the new Apple-Google message format. 
+4. Removing the judgement of Var1, which is from `... 0x00a 00`.
+5. Analyze the probablity that the scanning can't find all the other advertisements. BTW, make a slide drawing the timeline with advertising and scanning. 
+
+## Removed from To-do List
+
+1. Change to the new Apple-Google message format. 

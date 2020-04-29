@@ -2,4 +2,4 @@
 *.temp
 *.csv
 /images/
-*.config
+ContactTracing_RPI.conf

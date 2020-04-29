@@ -6,7 +6,7 @@ import sys
 
 fileName = "ContactTracingData_" + time.strftime("%Y%m%d", time.localtime()) + ".csv"
 FLAG = '1a'
-CT_SERVICE_UUID = '00006ffd'
+CT_SERVICE_UUID = '0000fd6f'
 SCAN_WINDOW = 3.0
 NUM_DESC = 3 
 
@@ -42,7 +42,7 @@ if __name__ == '__main__':
             else:
                 if scanData[0][0] == 1 and scanData[0][2] == FLAG and scanData[1][0] == 3 and scanData[2][0] == 22 and scanData[1][2][0:8] == CT_SERVICE_UUID:
                     ServiceData = scanData[2][2]
-                    UUID = ServiceData[0:4]
+                    UUID = ServiceData[2:4] + ServiceData[0:2]
                     RCI = ServiceData[4:36]
                     Version = ServiceData[36:38]
                     TXPower = ServiceData[38:40]

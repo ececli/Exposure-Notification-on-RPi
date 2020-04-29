@@ -1,5 +1,6 @@
 #!/bin/bash
 . ./ContactTracing_BLE.conf
+. ./ContactTracing_RPI.conf
 
 checkResult(){
     Input=$1
@@ -29,7 +30,7 @@ Advertising(){
         sudo hciconfig $BLE_DEVICE noscan
         sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 00
         Var2=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x006 $MIN_INTV $MAX_INTV $ADV_NONCONN_IND 00 00 00 00 00 00 00 00 $ADV_CHANNEL 00)
-        Var3=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x008 1f 02 01 1a 03 03 $SERVICE_UUID_LSB $SERVICE_UUID_MSB 17 16 $SERVICE_UUID_LSB $SERVICE_UUID_MSB $PRI $VERSION $TXPower 00 00)
+        Var3=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x008 1f 02 01 1a 03 03 $SERVICE_UUID_LSB $SERVICE_UUID_MSB 17 16 $SERVICE_UUID_LSB $SERVICE_UUID_MSB $RPI $VERSION $TXPower 00 00)
         Var4=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 01)
 
         # if checkResult "$Var1" -a checkResult "$Var2" -a checkResult "$Var3" -a checkResult "$Var4";

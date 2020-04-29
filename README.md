@@ -60,11 +60,11 @@ There are some possible solutions for this issue (by searching the Internet):
 1. Revise config file so that both bash script and Python can read and import it.
 2. Change to the absolute path or current path. 
 3. Add function to log the fail events.
-4. Removing the judgment of Var1, which is from `... 0x00a 00`. 
-5. Analyze the probability that the scanning can't find all the other advertisements. BTW, make a slide drawing the timeline with advertising and scanning. 
-6. Integrate the Cryptography Specification from Apple and Google. Currently, the Rolling Proximity Identifier (RPI) is static and I just write some random numbers for it. The Metadata (including Version, TX power, and Reserved) is not encrypted. 
-7. Figure out how to change the MAC address to the random non-resolvable address. Not sure if Raspberry Pi allows doing so. 
+4. Analyze the probability that the scanning can't find all the other advertisements. BTW, make a slide drawing the timeline with advertising and scanning. 
+5. Integrate the Cryptography Specification from Apple and Google. Currently, the Rolling Proximity Identifier (RPI) is static and I just write some random numbers for it. The Metadata (including Version, TX power, and Reserved) is not encrypted. 
+6. Figure out how to change the MAC address to the random non-resolvable address. Not sure if Raspberry Pi allows doing so. 
 
 ## Removed from To-do List
 
 1. Change to the new Apple-Google message format. 
+2. Removing the judgment of Var1, which is from `... 0x00a 00`. 

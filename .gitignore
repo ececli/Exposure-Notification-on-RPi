@@ -2,5 +2,5 @@
 *.temp
 *.csv
 /images/
-/Collected_Data/
+/Collected_Data/*
 ContactTracing_RPI.conf

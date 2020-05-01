@@ -62,7 +62,7 @@ There are some possible solutions for this issue (by searching the Internet):
 3. Add function to log the fail events.
 4. Analyze the probability that the scanning can't find all the other advertisements. BTW, make a slide drawing the timeline with advertising and scanning. 
 5. Integrate the Cryptography Specification from Apple and Google. Currently, the Rolling Proximity Identifier (RPI) is static and I just write some random numbers for it. The Metadata (including Version, TX power, and Reserved) is not encrypted. 
-6. Figure out how to change the MAC address to the random non-resolvable address. Not sure if Raspberry Pi allows doing so. 
+6. Change the MAC address to the random non-resolvable address.
 
 ## Removed from To-do List
 

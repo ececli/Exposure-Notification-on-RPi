@@ -4,3 +4,5 @@
 /images/
 /Collected_Data/*
 ContactTracing_RPI.conf
+*.txt
+*.config

@@ -1,6 +1,6 @@
 #!/bin/bash
 . ./ContactTracing_BLE.conf
-. ./ContactTracing_RPI.conf
+. ./MAC_RPI_AEM.config
 
 checkResult(){
     Input=$1
@@ -29,12 +29,16 @@ Advertising(){
         echo "Trial number" $int
         sudo hciconfig $BLE_DEVICE noscan
         Var1=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 00)
-        Var2=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x006 $MIN_INTV $MAX_INTV $ADV_NONCONN_IND 00 00 00 00 00 00 00 00 $ADV_CHANNEL 00)
-        Var3=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x008 1f 02 01 1a 03 03 $SERVICE_UUID_LSB $SERVICE_UUID_MSB 17 16 $SERVICE_UUID_LSB $SERVICE_UUID_MSB $RPI $VERSION $TXPower 00 00)
-        Var4=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 01)
+	Var2=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x005 $MAC)
+        # Var3=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x006 $MIN_INTV $MAX_INTV $ADV_NONCONN_IND 00 00 00 00 00 00 00 00 $ADV_CHANNEL 00)
+	Var3=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x006 $MIN_INTV $MAX_INTV $ADV_NONCONN_IND $RANDOM_ADDR 00 00 00 00 00 00 00 $ADV_CHANNEL 00)
+        # Var4=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x008 1f 02 01 1a 03 03 $SERVICE_UUID_LSB $SERVICE_UUID_MSB 17 16 $SERVICE_UUID_LSB $SERVICE_UUID_MSB $RPI $VERSION $TXPower 00 00)
+	Var4=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x008 1f 02 01 1a 03 03 $SERVICE_UUID_LSB $SERVICE_UUID_MSB 17 16 $SERVICE_UUID_LSB $SERVICE_UUID_MSB $RPI $AEM)
+        Var5=$(sudo hcitool -i $BLE_DEVICE cmd 0x08 0x00a 01)
 
         # if checkResult "$Var1" -a checkResult "$Var2" -a checkResult "$Var3" -a checkResult "$Var4";
-        if checkResult "$Var2" -a checkResult "$Var3" -a checkResult "$Var4";
+        # if checkResult "$Var2" -a checkResult "$Var3" -a checkResult "$Var4";
+	if checkResult "$Var2" -a checkResult "$Var3" -a checkResult "$Var4" -a checkResult "$Var5";
         then
             echo "BLE Advertising - Successful"
             return 0

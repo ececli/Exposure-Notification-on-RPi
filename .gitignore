@@ -6,3 +6,4 @@
 ContactTracing_RPI.conf
 *.txt
 *.config
+__pycache__/

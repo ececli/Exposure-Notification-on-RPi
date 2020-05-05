@@ -1,6 +1,6 @@
 #!/bin/bash
 . ./ContactTracing_BLE.conf
-. ./STATIC_RPI.config
+. ./STATIC_RPI.conf
 
 checkResult(){
     Input=$1

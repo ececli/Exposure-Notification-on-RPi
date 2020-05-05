@@ -3,9 +3,13 @@
 import cryptolib
 import os
 import datetime
+import csv
 
+csvFile_prefix = "CTData_"
 TEKLogFile_prefix = 'CT_TEK_'
 logPath = os.getcwd()+'/KeyLog'
+csvPath = os.getcwd()+'/Data'
+# csvPath = os.getcwd()
 keptDays = 14
 
 def isCreatedToday(fileName):
@@ -18,8 +22,43 @@ def isCreatedToday(fileName):
 
 def isFolderExist(path):
     if not os.path.exists(path):
+        print('Path is not existed.')
         os.makedirs(path, exist_ok=True)
+        print('Path created: ' + path)
+        os.chmod(path,0o777)
 
+def csvFileName(isEnpt = False):
+    if isEnpt:
+        return csvFile_prefix + datetime.datetime.now().strftime('%m%d') + "_Enpt.csv"
+    else:
+        return csvFile_prefix + datetime.datetime.now().strftime('%m%d') + ".csv"
+
+def create_csvFile(isEnpt = False):
+    isFolderExist(csvPath)
+    fileName = csvFileName(isEnpt)
+    if not os.path.exists(csvPath+'/' +fileName):
+        with open(csvPath+'/' +fileName,'w') as f:
+            csv_write = csv.writer(f)
+            if isEnpt:
+                csv_head = ["Timestamp","MAC","RSSI","UUID","RPI","AEM"]
+            else:
+                csv_head = ["Timestamp","MAC","RSSI","UUID","RPI","Version","TX_Power","Reserved"]
+            csv_write.writerow(csv_head)
+        
+    os.chmod(csvPath+'/' +fileName,0o666)
+    
+    
+def writeCSV(rowData, isEnpt = False):
+    isFolderExist(csvPath)
+    fileName = csvFileName(isEnpt)
+    if not(os.path.exists(csvPath+'/' +fileName)):
+        print(os.path.exists(csvPath+'/' +fileName))
+        print('file does not exist')
+        create_csvFile()
+        
+    with open(csvPath+'/' + fileName,'a') as f:
+        csv_write = csv.writer(f)
+        csv_write.writerow(rowData)
 
 # Write Temporary Exposure Key
 def writeTEK(tek, fileName):

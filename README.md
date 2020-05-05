@@ -11,7 +11,7 @@ Before running the code, some libraries are needed for Raspberry Pi. Note that [
 ```
 $ sudo apt-get install python-pip libglib2.0-dev
 $ sudo pip3 install bluepy
-$sudo pip3 install pycryptodome
+$ sudo pip3 install pycryptodome
 ```
 I may forget some libraries I installed. I will check the above list again. 
 

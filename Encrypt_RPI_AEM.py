@@ -1,19 +1,14 @@
 import cryptolib
 import random
 from os import path
+import fileoplib
 
 TEK_fileName = 'TEK.txt'
 META_fileName = 'MetaData.txt'
 RPI_AEM_fileName = "MAC_RPI_AEM.config"
 RPI_AEM_logFileName = "GenRPI.log"
 # Read Temporary Exposure Key
-if path.exists(TEK_fileName):
-    with open(TEK_fileName, 'rb') as fb:
-        tek = fb.read()
-else:
-    tek, i = cryptolib.getTEK(16)
-    with open('TEK.txt', 'wb') as fb:
-        fb.write(tek)
+tek = fileoplib.readTEK(TEK_fileName)
 print('TEK: ', tek)
 # Read Metadata
 if path.exists(META_fileName):
@@ -43,13 +38,8 @@ while True:
                     random.randint(0, 63)) # Note that MSB is in the end
     if not(MAC == '00 00 00 00 00 00' or MAC == 'ff ff ff ff ff 3f'):
         break 
-print('MAC: ', MAC)
-with open(RPI_AEM_fileName,'w+') as fb:
-    fb.write("export MAC=\""+MAC+"\"\n")
-    fb.write("export RPI=\""+' '.join(a+b for a,b in zip(rpi_hex[::2], rpi_hex[1::2]))+"\"\n")
-    fb.write("export AEM=\""+' '.join(a+b for a,b in zip(aem_hex[::2], aem_hex[1::2]))+"\"")
-    
-    
+print('MAC: ', MAC)    
+fileoplib.writeConfig(MAC,rpi_hex,aem_hex,RPI_AEM_fileName)  
 
 # with open(RPI_AEM_logFileName,'a+') as fb:
     # fb.write()

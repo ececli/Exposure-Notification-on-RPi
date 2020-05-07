@@ -7,9 +7,9 @@ Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notif
 ## How to Run The Codes
 
 Before running the code, some libraries are needed for Raspberry Pi. Note that [bluepy](https://github.com/IanHarvey/bluepy) is used in Python 3. 
-<!--$ sudo apt install pi-bluetooth-->
+<!--$ sudo apt install pi-bluetooth
+$ sudo apt-get install python-pip libglib2.0-dev-->
 ```
-$ sudo apt-get install python-pip libglib2.0-dev
 $ sudo pip3 install bluepy
 $ sudo pip3 install pycryptodome
 ```

@@ -1,3 +1,4 @@
+# Encrypted version
 from bluepy.btle import Scanner, BTLEManagementError
 import fileoplib
 import os

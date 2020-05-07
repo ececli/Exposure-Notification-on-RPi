@@ -1,37 +1,16 @@
-# Exposure-Notification-on-RPi
+# To do List 
 
-## Introduction
+Here is the list of the things that have not been done yet. And the list of issues found during the test. 
 
-Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notification Service, previous is called Contact Tracing, is named by Apple and Google in their [documents](https://www.apple.com/covid19/contacttracing/). The code here implements the Bluetooth Specification from Apple and Google on Raspberry Pis which run Debian-based systems. 
+## To-do List
 
-## How to Run The Codes
-
-Before running the code, some libraries are needed for Raspberry Pi. Note that [bluepy](https://github.com/IanHarvey/bluepy) is used in Python 3. 
-<!--$ sudo apt install pi-bluetooth
-$ sudo apt-get install python-pip libglib2.0-dev-->
-```
-$ sudo pip3 install bluepy
-$ sudo pip3 install pycryptodome
-```
-Next, make sure the bash script (.sh) is executable. If not, use the following command:
-```
-$ chmod +x ContractTracing_BLE.sh
-```
-Finally, run the bash script by typing `$./ContractTracing_BLE.sh` for the unencrypted version, or `$./ContractTracing_BLE_Enpy.sh` for a completed version, including the Apple-Google cryptography protocol. 
-
-Done!
-
-**Note:** When using the unencrypted version, remember to change the Rolling Proximity Identifier (RPI) for each device. It can be changed in [STATIC_RPI.conf](/STATIC_RPI.conf) file. If you clone the code to multiple devices but forget to change it, all the records will have the same RPI. But you can still identify different devices via MAC address. 
-
-## Explanation of the Output
-
-The program records the information of other BLE devices that use the same service (the Exposure Notification Service). The output is in a .csv file. The format of the csv file is as follows. 
-
-<!--<img src="/images/Example_Output_ContactTracing.PNG">-->
-<img src="https://github.com/ececli/Exposure-Notification-on-RPi/blob/master/images/Example_Output_ContactTracing.PNG">
-
-The first column is the [Unix Time](https://en.wikipedia.org/wiki/Unix_time) and its unit is second. The second column is the MAC addresses of the other BLE devices. The third column is the received RSSI (dBm). The fourth column is the Service UUID, and it is 0xFD6F for the Exposure Notification Service. The fifth column is the Rolling Proximity Identifier (RPI), which can be seen as the unique ID of each device. The sixth column is the version of the service. Currently it is 0x40. The next column is the transmit power level (dBm). The hex value 0x0C is 12 in decimal. So it is 12dBm. The last column is reserved for future use. The detailed information about Service UUID and RPI can be found [here](https://www.apple.com/covid19/contacttracing/). 
-
+* Revise config file so that both bash script and Python can read and import it.
+* Change to the absolute path or current path. 
+* Add function to log the fail events.
+* Analyze the probability that the scanning can't find all the other advertisements. BTW, make a slide drawing the timeline with advertising and scanning. 
+* Test different scanning and advertising frequency. 
+* Random scan time
+* Log the key (Lu's work)
 
 
 ## Current Issue(s)
@@ -54,12 +33,7 @@ There are some possible solutions for this issue (by searching the Internet):
 
 ***4/28 Update:*** After fixing this by resetting the BLE, the devices run at least a whole day. However, after analyzing the collected data, I found that there is a chance that two devices can't see each other for at most 14 minites (which occurs once in an 18 hours continuous running). Not sure if this happens due to the BLE problem or other issues. 
 
-## To-do List
 
-1. Revise config file so that both bash script and Python can read and import it.
-2. Change to the absolute path or current path. 
-3. Add function to log the fail events.
-4. Analyze the probability that the scanning can't find all the other advertisements. BTW, make a slide drawing the timeline with advertising and scanning. 
 
 
 ## Removed from To-do List

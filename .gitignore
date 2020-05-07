@@ -8,3 +8,4 @@ __pycache__/
 *.csv
 *.txt
 *.config
+*.md

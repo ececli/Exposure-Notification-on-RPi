@@ -1,6 +1,6 @@
 # Exposure Notification (Contact Tracing) System on Raspberry Pi
 
-Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notification Service, previous is called Contact Tracing, is named by Apple and Google in their [documents](https://www.apple.com/covid19/contacttracing/). The code here implements the Bluetooth Specification from Apple and Google on Raspberry Pis which run Debian-based systems. 
+Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notification Service, previous is called Contact Tracing, is named by Apple and Google in their [documents](https://www.apple.com/covid19/contacttracing/). The code here implements the Apple-Google Protocol on Raspberry Pis which run Debian-based systems. 
 
 ## Project Status: [Active development]
 
@@ -8,7 +8,7 @@ Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notif
 
   * Each device can do both advertising (broadcasting) and scanning (observing), and record other devices using the same Contact Tracing Service. It is compatible with other types of devices such as iPhones and Android phones.
   
-  * Random and non-resolvable MAC address, Random ID (called RPI) and Encrypted Data change every 15 minutes to protect privacy
+  * Random and non-resolvable MAC address, random ID (called Rolling Proximity Identifier) and encrypted Data change every 15 minutes to protect privacy
 
   * Record all the data locally, and it has the functionality to auto-delete data more than 14 days ago. 
 
@@ -16,9 +16,9 @@ Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notif
 
   * **The Version with Encryption** - A completed version that implemented Apple-Google Protocol. All the advertising data is encrypted. 
   
-  * **The Version without Encryption** - A version that does not apply the encryption. The MAC address is not random, the RPI and metadat are uncrypted. This version can be used for research purpose and data collection. 
+  * **The Version without Encryption** - A version that does not apply the encryption. The MAC address is not random, the RPI and metadata are unencrypted. This version can be used for research purposes and data collection. 
 
-* It has the capablity to handle hardware glitch. No hardware is perfect. The code can detect when the Bluetooth module fails to work and reset the module immediately. 
+* It has the capability to handle hardware glitch. No hardware is perfect. The code can detect when the Bluetooth module fails to work and reset the module immediately. 
 
 
 ## Testing Summary: [complete functional tests]
@@ -29,11 +29,11 @@ The developed code has been tested on different models of Raspberry Pi: Raspberr
 
 The code can be used in all the Raspberry Pi models that have Bluetooth module. The cheapest and smallest one is [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/), which is under $10. 
 
-We recommend to use the latest [Raspbian System](https://www.raspberrypi.org/downloads/) for a Raspberry Pi. The OS has pre-installed Python 3 and git. 
+We recommend using the latest [Raspbian System](https://www.raspberrypi.org/downloads/) for a Raspberry Pi. The OS has pre-installed Python 3 and git. 
 
 ### Prerequisites
 
-First, Python 3 and bash commands are used to execute the code. The following libraries are required in Python 3. The [bluepy](https://github.com/IanHarvey/bluepy) library is used for Bluetooth scanning, while [pycryptodome](https://pypi.org/project/pycryptodome/) is used for the cryptography part. To intsall these two, run the following commands:
+First, Python 3 and bash commands are used to execute the code. The following libraries are required in Python 3. The [bluepy](https://github.com/IanHarvey/bluepy) library is used for Bluetooth scanning, while [pycryptodome](https://pypi.org/project/pycryptodome/) is used for the cryptography part. To install these two, run the following commands:
 ```
 $ sudo pip3 install bluepy
 $ sudo pip3 install pycryptodome
@@ -49,7 +49,7 @@ If you are using the version with encryption, you need to set up `Encrypt_RPI_AE
 ```
 */15 * * * * cd YOUR_PATH/Exposure-Notification-on-RPi/ && python3 Encrypt_RPI_AEM.py
 ```
-This line ensures that the system will execute `Encrypt_RPI_AEM.py` file every 15 minutes, so that the random MAC address, Rolling Proximity Identifier (RPI) and AEM changed every 15 minutes. Remember to change `YOUT_PATH`. 
+This line ensures that the system will execute `Encrypt_RPI_AEM.py` file every 15 minutes, so that the random MAC address, Rolling Proximity Identifier (RPI) and (Associated Encrypted Metadata) AEM changed every 15 minutes. Remember to change `YOUT_PATH`. 
 
 You can wait after the system executes `Encrypt_RPI_AEM.py` once, or you can manually execute `Encrypt_RPI_AEM.py` to generate the TEK. Once the TEK is generated, you can run the code by typing
 ```
@@ -59,7 +59,7 @@ The result is stored in a `CTData_XXXX_Enpt.csv` file in the `Data` folder.
 
 ### Using the Version without Encryption
 
-If you do not need the version with encryption, you do not need to setup `Encrypt_RPI_AEM.py`. Instead, you may want to change the RPI in the `STATIC_RPI.conf`. Otherwise, you will see multiple devices have the same RPI. To execute the code, run
+If you do not need the version with encryption, you do not need to set up `Encrypt_RPI_AEM.py`. Instead, you may want to change the RPI in the `STATIC_RPI.conf`. Otherwise, you will see multiple devices that have the same RPI. To execute the code, run
 ```
 $ ./ContractTracing_BLE.sh
 ```
@@ -84,7 +84,7 @@ The code records the information of other BLE devices that use the same service 
 <!--<img src="/images/Example_Output_ContactTracing.PNG">-->
 <img src="https://github.com/ececli/Exposure-Notification-on-RPi/blob/master/images/Example_Output_ContactTracing.PNG">
 
-The first five columns are the same as the csv file in the version with encryption. The difference is in the metadata part. The metadata contains the version of the service, the transmit power and the reserved part. In the encrypted version, the metadata is encrypted. Thus, the receiver cannot decode the information. In the unencrypted version, however, the receiver can obtain all the information in the metadata. Therefore, the sixth column is the version of the service. Currently it is 0x40. The next column is the transmit power level (dBm). The hex value 0x0C is 12 in decimal. So it is 12dBm. The last column is reserved for future use. The detailed information about Service UUID, RPI and metadata can be found [here](https://www.apple.com/covid19/contacttracing/). 
+The first five columns are the same as the csv file in the version with encryption. The difference is in the metadata part. The metadata contains the version of the service, the transmit power, and the reserved part. In the encrypted version, the metadata is encrypted. Thus, the receiver cannot decode the information. In the unencrypted version, however, the receiver can obtain all the information in the metadata. Therefore, the sixth column is the version of the service. Currently, it is 0x40. The next column is the transmit power level (dBm). The hex value 0x0C is 12 in decimal. So it is 12dBm. The last column is reserved for future use. The detailed information about Service UUID, RPI, and metadata can be found [here](https://www.apple.com/covid19/contacttracing/). 
 
 ## Contributing
 
@@ -92,7 +92,7 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md) for details on our code of condu
 
 ## Authors & Main Contributors
 
-Chang Li (ANTD/ITL/NIST): Implemented the Bluetooth communication part based on [Bluetooth Specification](https://www.apple.com/covid19/contacttracing/). Built up the system and tested. 
+Chang Li (ANTD/ITL/NIST): Implemented the Bluetooth communication part based on [Bluetooth Specification](https://www.apple.com/covid19/contacttracing/). Built-up the system and tested it. 
 
 Lu Shi (ANTD/ITL/NIST): Implemented the cryptography part based on [Cryptography Specification](https://www.apple.com/covid19/contacttracing/). Wrote the Python file [cryptolib.py](\cryptolib.py)
 
@@ -100,7 +100,7 @@ Lu Shi (ANTD/ITL/NIST): Implemented the cryptography part based on [Cryptography
 
 ## Related Work
 
-This works implements [Apple-Google Protocol on Privacy-Preserving Contact Tracing](https://www.apple.com/covid19/contacttracing/). The detailed information can be found in their website and documents. 
+This works implements [Apple-Google Protocol on Privacy-Preserving Contact Tracing](https://www.apple.com/covid19/contacttracing/). The detailed information can be found on their website and documents. 
 
 
 
@@ -119,4 +119,4 @@ See [LICENSE.md](/LICENSE.md)
 -->
 ## Contact
 
-Please contact Chang Li (<chang.li@nist.gov>), Lu Shi (<lu.shi@nist.gov>) or Nader Moayeri (<nader.moayeri@nist.gov>) if you have any questions. Thank you.
+Please contact Chang Li (<chang.li@nist.gov>), Lu Shi (<lu.shi@nist.gov>), or Nader Moayeri (<nader.moayeri@nist.gov>) if you have any questions. Thank you.

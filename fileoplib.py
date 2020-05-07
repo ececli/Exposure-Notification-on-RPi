@@ -9,7 +9,6 @@ csvFile_prefix = "CTData_"
 TEKLogFile_prefix = 'CT_TEK_'
 logPath = os.getcwd()+'/KeyLog'
 csvPath = os.getcwd()+'/Data'
-# csvPath = os.getcwd()
 keptDays = 14
 
 def isCreatedToday(fileName):

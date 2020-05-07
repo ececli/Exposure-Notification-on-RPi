@@ -1,3 +1,4 @@
+# Unencrypted version
 from bluepy.btle import Scanner, BTLEManagementError
 import os
 import sys

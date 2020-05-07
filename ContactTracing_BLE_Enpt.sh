@@ -1,7 +1,6 @@
 #!/bin/bash
 . ./ContactTracing_BLE.conf
 
-
 checkResult(){
     Input=$1
     # echo $Input

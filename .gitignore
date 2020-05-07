@@ -1,6 +1,10 @@
+__pycache__/
+/images/
+/Collected_Data/*
+/KeyLog/
+/Data/
 *.log
 *.temp
 *.csv
-/images/
-/Collected_Data/*
-ContactTracing_RPI.conf
+*.txt
+*.config

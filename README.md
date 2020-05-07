@@ -7,22 +7,21 @@ Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notif
 ## How to Run The Codes
 
 Before running the code, some libraries are needed for Raspberry Pi. Note that [bluepy](https://github.com/IanHarvey/bluepy) is used in Python 3. 
-<!--$ sudo apt install pi-bluetooth-->
+<!--$ sudo apt install pi-bluetooth
+$ sudo apt-get install python-pip libglib2.0-dev-->
 ```
-$ sudo apt-get install python-pip libglib2.0-dev
 $ sudo pip3 install bluepy
+$ sudo pip3 install pycryptodome
 ```
-I may forget some libraries I installed. I will check the above list again. 
-
-Next, the bash script (.sh) needs to be executable. To achieve this, run
+Next, make sure the bash script (.sh) is executable. If not, use the following command:
 ```
 $ chmod +x ContractTracing_BLE.sh
 ```
-Finally, run the bash script by typing `$./ContractTracing_BLE.sh`
+Finally, run the bash script by typing `$./ContractTracing_BLE.sh` for the unencrypted version, or `$./ContractTracing_BLE_Enpy.sh` for a completed version, including the Apple-Google cryptography protocol. 
 
 Done!
 
-**Note:** Remember to change the Rolling Proximity Identifier (RPI) for each device. It can be changed in [ContactTracing_BLE.conf](/ContactTracing_BLE.conf) file. If you clone the code to multiple devices but forget to change it, all the records will have the same RPI. But you can still identify different devices via MAC address. 
+**Note:** When using the unencrypted version, remember to change the Rolling Proximity Identifier (RPI) for each device. It can be changed in [STATIC_RPI.conf](/STATIC_RPI.conf) file. If you clone the code to multiple devices but forget to change it, all the records will have the same RPI. But you can still identify different devices via MAC address. 
 
 ## Explanation of the Output
 
@@ -61,10 +60,11 @@ There are some possible solutions for this issue (by searching the Internet):
 2. Change to the absolute path or current path. 
 3. Add function to log the fail events.
 4. Analyze the probability that the scanning can't find all the other advertisements. BTW, make a slide drawing the timeline with advertising and scanning. 
-5. Integrate the Cryptography Specification from Apple and Google. Currently, the Rolling Proximity Identifier (RPI) is static and I just write some random numbers for it. The Metadata (including Version, TX power, and Reserved) is not encrypted. 
-6. Figure out how to change the MAC address to the random non-resolvable address. Not sure if Raspberry Pi allows doing so. 
+
 
 ## Removed from To-do List
 
 1. Change to the new Apple-Google message format. 
 2. Removing the judgment of Var1, which is from `... 0x00a 00`. 
+3. Integrate the Cryptography Specification from Apple and Google. Currently, the Rolling Proximity Identifier (RPI) is static and I just write some random numbers for it. The Metadata (including Version, TX power, and Reserved) is not encrypted. 
+4. Change the MAC address to the random non-resolvable address.

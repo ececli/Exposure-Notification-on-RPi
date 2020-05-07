@@ -8,3 +8,4 @@ ContactTracing_RPI.conf
 *.config
 __pycache__/
 /KeyLog/
+

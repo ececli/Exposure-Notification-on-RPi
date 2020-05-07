@@ -94,7 +94,7 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md) for details on our code of condu
 
 Chang Li (ANTD/ITL/NIST): Implemented the Bluetooth communication part based on [Bluetooth Specification](https://www.apple.com/covid19/contacttracing/). Built-up the system and tested it. 
 
-Lu Shi (ANTD/ITL/NIST): Implemented the cryptography part based on [Cryptography Specification](https://www.apple.com/covid19/contacttracing/). Wrote the Python file [cryptolib.py](\cryptolib.py)
+Lu Shi (ANTD/ITL/NIST): Implemented the cryptography part based on [Cryptography Specification](https://www.apple.com/covid19/contacttracing/). Wrote the Python file [cryptolib.py](\cryptolib.py).
 
 <!--See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.-->
 

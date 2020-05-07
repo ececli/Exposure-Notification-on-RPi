@@ -1,3 +1,5 @@
+# Cryptography Library
+# by Lu Shi, ANTD/NIST
 import secrets
 import string
 import time

@@ -13,17 +13,15 @@ $ sudo apt-get install python-pip libglib2.0-dev-->
 $ sudo pip3 install bluepy
 $ sudo pip3 install pycryptodome
 ```
-I may forget some libraries I installed. I will check the above list again. 
-
-Next, the bash script (.sh) needs to be executable. To achieve this, run
+Next, make sure the bash script (.sh) is executable. If not, use the following command:
 ```
 $ chmod +x ContractTracing_BLE.sh
 ```
-Finally, run the bash script by typing `$./ContractTracing_BLE.sh`
+Finally, run the bash script by typing `$./ContractTracing_BLE.sh` for the unencrypted version, or `$./ContractTracing_BLE_Enpy.sh` for a completed version, including the Apple-Google cryptography protocol. 
 
 Done!
 
-**Note:** Remember to change the Rolling Proximity Identifier (RPI) for each device. It can be changed in [ContactTracing_BLE.conf](/ContactTracing_BLE.conf) file. If you clone the code to multiple devices but forget to change it, all the records will have the same RPI. But you can still identify different devices via MAC address. 
+**Note:** When using the unencrypted version, remember to change the Rolling Proximity Identifier (RPI) for each device. It can be changed in [STATIC_RPI.conf](/STATIC_RPI.conf) file. If you clone the code to multiple devices but forget to change it, all the records will have the same RPI. But you can still identify different devices via MAC address. 
 
 ## Explanation of the Output
 

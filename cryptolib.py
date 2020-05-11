@@ -102,7 +102,7 @@ def getRPI(rpik):
 
 # Generate Associated Encrypted Metadata Key
 def getAEMK(tek):
-    info_bytes = 'CT-AEMK'.encode('utf-8')
+    info_bytes = 'EN-AEMK'.encode('utf-8')
     return hkdf(tek, '', info_bytes, 16)
 
 # Associated Encrypted Metadata

@@ -1,14 +1,14 @@
 # Exposure Notification (Contact Tracing) System on Raspberry Pi
 
-Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notification Service, previous is called Contact Tracing, is named by Apple and Google in their [documents](https://www.apple.com/covid19/contacttracing/). The code here implements the Apple-Google Protocol on Raspberry Pis which run Debian-based systems. 
+Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notification Service, previously called Contact Tracing, is the name used by Apple and Google in their [documents](https://www.apple.com/covid19/contacttracing/). The code here implements the Apple-Google Protocol on Raspberry Pis which run Debian-based systems. 
 
-## Project Status: [Active development]
+## Project Status: [Active Development]
 
 * Fully implemented the [Apple-Google Protocol on Privacy-Preserving Contact Tracing](https://www.apple.com/covid19/contacttracing/) on the Raspberry Pi based system.  
 
-  * Each device can do both advertising (broadcasting) and scanning (observing), and record other devices using the same Contact Tracing Service. It is compatible with other types of devices such as iPhones and Android phones.
+  * Each device can do both advertising (broadcasting) and scanning (observing), and can record other devices using the same Contact Tracing Service. It is compatible with other types of devices such as iPhones and Android phones.
   
-  * Random and non-resolvable MAC address, random ID (called Rolling Proximity Identifier) and encrypted Data change every 15 minutes to protect privacy
+  * Each device uses random and non-resolvable MAC addresses, random IDs (called Rolling Proximity Identifiers) and encrypted Data change every 15 minutes to protect privacy
 
   * Record all the data locally, and it has the functionality to auto-delete data more than 14 days ago. 
 

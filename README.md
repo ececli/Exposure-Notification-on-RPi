@@ -6,9 +6,9 @@ Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notif
 
 * Fully implemented the [Apple-Google Protocol on Privacy-Preserving Contact Tracing](https://www.apple.com/covid19/contacttracing/) on the Raspberry Pi based system.  
 
-  * Each device can do both advertising (broadcasting) and scanning (observing), and can record other devices using the same Contact Tracing Service. It is compatible with other types of devices such as iPhones and Android phones.
+  * Each device can do both advertising (broadcasting) and scanning (observing), and can record other devices using the same Exposure Notification Service. It is compatible with other types of devices such as iPhones and Android phones.
   
-  * Each device uses random and non-resolvable MAC addresses, random IDs (called Rolling Proximity Identifiers) and encrypted Data change every 15 minutes to protect privacy
+  * Each device uses random and non-resolvable MAC addresses, random IDs (called Rolling Proximity Identifiers) and encrypted data that change every 15 minutes to protect privacy.
 
   * Each device records all data locally and auto-deletes any data more than 14 days old. 
 
@@ -18,7 +18,7 @@ Codes and Data for the Exposure Notification on the Raspberry Pi. Exposure Notif
   
   * **The Version without Encryption** - A version that does not apply encryption. The MAC address is not random, the RPI and metadata are unencrypted. This version can be used for research purposes and data collection. 
 
-* The prototype has the capability to handle hardware glitch. No hardware is perfect. The code can detect when the Bluetooth module fails to work and reset the module immediately. 
+* The prototype has the capability to handle occasional hardware glitches. No hardware is perfect. The code detects when the Bluetooth module stops working and resets the module immediately. 
 
 
 ## Testing Summary: [Complete Functional Tests]
@@ -45,7 +45,7 @@ $ chmod +x ContractTracing_BLE_Enpt.sh
 ```
 
 ### Using the Version with Encryption
-If you are using the version with encryption, you need to set up `Encrypt_RPI_AEM.py` to be executed automatically and periodically. To do so, use `crontab -e` and add 
+If you are using the version with encryption, you need to set up `Encrypt_RPI_AEM.py` to be executed automatically and periodically. To do so, use `crontab -e` to open the crontab file and add the following line to the crontab file.
 ```
 */15 * * * * cd YOUR_PATH/Exposure-Notification-on-RPi/ && python3 Encrypt_RPI_AEM.py
 ```
@@ -59,7 +59,7 @@ The result is stored in a `CTData_XXXX_Enpt.csv` file in the `Data` folder.
 
 ### Using the Version without Encryption
 
-If you do not need the version with encryption, there is no need to set up `Encrypt_RPI_AEM.py`. Instead, you may want to change the RPI in the `STATIC_RPI.conf`. Otherwise, you will see multiple devices that have the same RPI. To execute the code, run
+If you do not need the version with encryption, there is no need to set up `Encrypt_RPI_AEM.py`. Instead, it is recommended that you change the RPI in the `STATIC_RPI.conf`. Otherwise, you will see multiple devices that have the same RPI. To execute the code, run
 ```
 $ ./ContractTracing_BLE.sh
 ```
@@ -73,7 +73,7 @@ The code records the information of other BLE devices that use the same service 
 
 <img src="https://github.com/ececli/Exposure-Notification-on-RPi/blob/master/images/Example_Enctypted_Data.PNG">
 
-The first column is the [Unix Time](https://en.wikipedia.org/wiki/Unix_time) and its unit is second. The second column is the MAC addresses of other BLE devices seen. This could be a random non-resolvable MAC address or a public MAC address, depending on the protocol the other device uses.  
+The first column is the [Unix Time](https://en.wikipedia.org/wiki/Unix_time) and its unit is seconds. The second column is the MAC addresses of other BLE devices seen. This could be a random non-resolvable MAC address or a public MAC address, depending on the protocol the other device uses.  
 
 The third column is the RSSI (dBm). The fourth column is the Service UUID, and it is 0xFD6F for the Exposure Notification Service. The fifth column is the RPI of the other device, and the last column is the encrypted metadata. 
 
@@ -93,9 +93,9 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md) for details on our code of condu
 
 ## Authors & Main Contributors
 
-Chang Li (ANTD/ITL/NIST): Implemented the Bluetooth communication part based on [Apple-Google Bluetooth Specification](https://www.apple.com/covid19/contacttracing/). Built-up the system and tested it. 
+Chang Li (ANTD/ITL/NIST): Implemented the Bluetooth communication part based on [Apple-Google Bluetooth Specification (Version 1.2)](https://www.apple.com/covid19/contacttracing/). Built-up the system and tested it. 
 
-Lu Shi (ANTD/ITL/NIST): Implemented the cryptography part based on [Apple-Google Cryptography Specification](https://www.apple.com/covid19/contacttracing/). Wrote the Python file [cryptolib.py](\cryptolib.py).
+Lu Shi (ANTD/ITL/NIST): Implemented the cryptography part based on [Apple-Google Cryptography Specification (Version 1.2)](https://www.apple.com/covid19/contacttracing/). Wrote the Python file [cryptolib.py](\cryptolib.py).
 
 <!--See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.-->
 

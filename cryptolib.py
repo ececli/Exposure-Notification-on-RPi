@@ -90,9 +90,11 @@ def getRPIK(tek):
 # Create PaddedData for RPI
 def padData():
     info_bytes = 'EN-RPI'.encode('utf-8')
-    zero_bytes = '000000'.encode('utf-8')
+    zero_bytes = bytes.fromhex('000000000000')
     ENIN = getENIntervalNum()
-    ENIN_bytes = ENIN.to_bytes(4, byteorder='little')
+    ENIN_hex = str(hex(ENIN).lstrip("0x"))
+    ENIN_hex_le = ENIN_hex[4:] + ENIN_hex[2:4] + ENIN_hex[0:2] + "00"
+    ENIN_bytes = bytes.fromhex(ENIN_hex_le)
     return info_bytes + zero_bytes + ENIN_bytes
 
 # Generate Rolling Proximity Identifier 

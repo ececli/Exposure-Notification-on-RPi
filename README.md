@@ -82,7 +82,8 @@ The third column is the RSSI (dBm). The fourth column is the Service UUID, and i
 The code records the information of other BLE devices that use the same service (the Exposure Notification Service). The output is in a `CTData_XXXX.csv` file. The format of the csv file is somewhat different from the format of the version with encryption (shown above).
 
 <!--<img src="/images/Example_Output_ContactTracing.PNG">-->
-<img src="https://github.com/ececli/Exposure-Notification-on-RPi/blob/master/images/Example_Output_ContactTracing.PNG">
+<!--<img src="https://github.com/ececli/Exposure-Notification-on-RPi/blob/master/images/Example_Output_ContactTracing.PNG">-->
+<img src="https://github.com/ececli/Exposure-Notification-on-RPi/blob/master/images/Example_Unencrypted_Data.PNG">
 
 The first five columns are the same as the csv file in the version with encryption. The difference is in the metadata part, which includes the version of the service, the transmit power, and the reserved part. In the encrypted version, the metadata is encrypted. Thus, the receiver cannot decode the information. In the unencrypted version, however, the receiver can obtain all the information in the metadata. Therefore, the sixth column is the version of the service. Currently, it is 0x40. The next column is the transmit power level (dBm). The hex value 0x0C is 12 in decimal, which means 12 dBm. The last column is reserved for future use. The detailed information about Service UUID, RPI, and metadata can be found [here](https://www.apple.com/covid19/contacttracing/). 
 

@@ -22,8 +22,7 @@ def aes_encrypt(key, data):
 # AES-128 ECB Mode Decryption
 def aes_decrypt(key, ciphered_data):
     cipher = AES.new(key, AES.MODE_ECB)
-    pt = unpad(cipher.decrypt(ciphered_data), AES.block_size)
-    plaintext = pt.decode('utf-8')
+    plaintext = cipher.decrypt(ciphered_data)
     return plaintext
 
 

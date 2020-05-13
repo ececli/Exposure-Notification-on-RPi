@@ -6,44 +6,36 @@ import time
 import hashlib
 import hmac
 from math import ceil
+import pyaes
 
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad, unpad
 
-EKRollingPeriod = 144
+TEKRollingPeriod = 144
 
 
 # AES-128 ECB Mode Encryption
 def aes_encrypt(key, data):
-    cipher = AES.new(key, AES.MODE_ECB)
-    ciphered_bytes = cipher.encrypt(data)
-    return ciphered_bytes
+    aes = pyaes.AESModeOfOperationECB(key)
+    return aes.encrypt(data)
 
 # AES-128 ECB Mode Decryption
 def aes_decrypt(key, ciphered_data):
-    cipher = AES.new(key, AES.MODE_ECB)
-    plaintext = cipher.decrypt(ciphered_data)
-    return plaintext
-
+    aes = pyaes.AESModeOfOperationECB(key)
+    return aes.decrypt(ciphered_data)
 
 # AES-128 CTR Mode Encryption
 def aes_ctr_encrypt(key, iv, data):
-    nonce = iv[:15]
-    cipher = AES.new(key, AES.MODE_CTR, nonce=nonce)
-    ciphered_bytes = cipher.encrypt(data)
-    return ciphered_bytes
+    iv_int = int(iv.hex(), 16)
+    aes_ctr = pyaes.AESModeOfOperationCTR(key, pyaes.Counter(iv_int))
+    return aes_ctr.encrypt(data)
 
 # AES-128 CTR Mode Decryption
 def aes_ctr_decrypt(key, iv, ciphered_data):
-    nonce = iv[:15]
-    cipher = AES.new(key, AES.MODE_CTR, nonce=nonce)
-    pt = cipher.decrypt(ciphered_data)
-    plaintext = pt.hex()
-    return plaintext
+    iv_int = int(iv.hex(), 16)
+    aes_ctr = pyaes.AESModeOfOperationCTR(key, pyaes.Counter(iv_int))
+    return aes_ctr.decrypt(ciphered_data)
 
 
 # HKDF
-
 hash_len = 32
 
 def hmac_sha256(key, data):
@@ -76,7 +68,7 @@ def getENIntervalNum():
 # Generate Temporary Exposure Key (16 bytes)
 def getTEK(outputLength):
     tek = crng(outputLength)
-    i = (getENIntervalNum()//EKRollingPeriod) * EKRollingPeriod
+    i = (getENIntervalNum()//TEKRollingPeriod) * TEKRollingPeriod
     return tek, i
 
 
@@ -92,7 +84,15 @@ def padData():
     zero_bytes = bytes.fromhex('000000000000')
     ENIN = getENIntervalNum()
     ENIN_hex = str(hex(ENIN).lstrip("0x"))
-    ENIN_hex_le = ENIN_hex[4:] + ENIN_hex[2:4] + ENIN_hex[0:2] + "00"
+    ENIN_hex_le = ENIN_hex[4:] + ENIN_hex[2:4] + ENIN_hex[0:2] +  "00"
+    ENIN_bytes = bytes.fromhex(ENIN_hex_le)
+    return info_bytes + zero_bytes + ENIN_bytes
+
+def padData_test(ENIN):
+    info_bytes = 'EN-RPI'.encode('utf-8')
+    zero_bytes = bytes.fromhex('000000000000')
+    ENIN_hex = str(hex(ENIN).lstrip("0x"))
+    ENIN_hex_le = ENIN_hex[4:] + ENIN_hex[2:4] + ENIN_hex[0:2] +  "00"
     ENIN_bytes = bytes.fromhex(ENIN_hex_le)
     return info_bytes + zero_bytes + ENIN_bytes
 
@@ -106,6 +106,10 @@ def getAEMK(tek):
     info_bytes = 'EN-AEMK'.encode('utf-8')
     return hkdf(tek, '', info_bytes, 16)
 
-# Associated Encrypted Metadata
+# Generate Associated Encrypted Metadata
 def getAEM(aemk, rpi, metadata):
     return aes_ctr_encrypt(aemk, rpi, metadata)
+
+# Decrypt Metadata
+def getMetadata(aemk, rpi, ciphered_metadata):
+    return aes_ctr_decrypt(aemk, rpi, ciphered_metadata)

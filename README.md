@@ -33,10 +33,10 @@ We recommend using the latest [Raspbian System](https://www.raspberrypi.org/down
 
 ### Prerequisites
 
-First, Python 3 and bash commands are used to execute the code. The following libraries are required in Python 3. The [bluepy](https://github.com/IanHarvey/bluepy) library is used for Bluetooth scanning, while [pycryptodome](https://pypi.org/project/pycryptodome/) is used for the cryptography part. To install these libraries, run the following commands:
+First, Python 3 and bash commands are used to execute the code. The following libraries are required in Python 3. The [bluepy](https://github.com/IanHarvey/bluepy) library is used for Bluetooth scanning, while [pyaes](https://pypi.org/project/pyaes/) is used for the cryptography part. To install these libraries, run the following commands:
 ```
 $ sudo pip3 install bluepy
-$ sudo pip3 install pycryptodome
+$ sudo pip3 install pyaes
 ```
 Next, make sure the bash scripts (.sh) are executable. If not, use the following commands:
 ```

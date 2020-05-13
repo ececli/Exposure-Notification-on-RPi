@@ -4,12 +4,12 @@ import random
 from os import path
 import fileoplib
 
-TEK_fileName = 'TEK.txt'
+# TEK_fileName = 'TEK.txt'
 META_fileName = 'MetaData.txt'
 RPI_AEM_fileName = "MAC_RPI_AEM.config"
-RPI_AEM_logFileName = "GenRPI.log"
+# RPI_AEM_logFileName = "GenRPI.log"
 # Read Temporary Exposure Key
-tek = fileoplib.readTEK(TEK_fileName)
+tek = fileoplib.readTEK()
 print('TEK: ', tek)
 # Read Metadata
 if path.exists(META_fileName):

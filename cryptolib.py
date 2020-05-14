@@ -1,5 +1,4 @@
-# Cryptography Library
-# by Lu Shi, ANTD/NIST
+
 import secrets
 import string
 import time
@@ -17,16 +16,19 @@ def aes_encrypt(key, data):
     aes = pyaes.AESModeOfOperationECB(key)
     return aes.encrypt(data)
 
+
 # AES-128 ECB Mode Decryption
 def aes_decrypt(key, ciphered_data):
     aes = pyaes.AESModeOfOperationECB(key)
     return aes.decrypt(ciphered_data)
+
 
 # AES-128 CTR Mode Encryption
 def aes_ctr_encrypt(key, iv, data):
     iv_int = int(iv.hex(), 16)
     aes_ctr = pyaes.AESModeOfOperationCTR(key, pyaes.Counter(iv_int))
     return aes_ctr.encrypt(data)
+
 
 # AES-128 CTR Mode Decryption
 def aes_ctr_decrypt(key, iv, ciphered_data):
@@ -53,17 +55,20 @@ def hkdf(key, salt, info, outputLength):
         okm += t
     return okm[:outputLength]
 
+
 # CRNG
 def crng(outputLength):
-    alphabet = string.ascii_letters + string.digits
-    crn = ''.join(secrets.choice(alphabet) for i in range(outputLength))
-    return crn.encode('utf-8')
+    size = outputLength*2
+    alphabet = '0123456789abcdef'
+    crn = ''.join(secrets.choice(alphabet) for i in range(size))
+    return bytes.fromhex(crn)
 
 
 # Generate ENIntervalNumber
 def getENIntervalNum():
     now = time.time()
     return int(now/600)
+
 
 # Generate Temporary Exposure Key (16 bytes)
 def getTEK(outputLength):
@@ -78,7 +83,7 @@ def getRPIK(tek):
     return hkdf(tek, '', info_bytes, 16)
 
 
-# Create PaddedData for RPI
+# Create PaddedData for associated RPI
 def padData():
     info_bytes = 'EN-RPI'.encode('utf-8')
     zero_bytes = bytes.fromhex('000000000000')
@@ -88,6 +93,8 @@ def padData():
     ENIN_bytes = bytes.fromhex(ENIN_hex_le)
     return info_bytes + zero_bytes + ENIN_bytes
 
+
+# Create PaddedData for associated RPI (test version)
 def padData_test(ENIN):
     info_bytes = 'EN-RPI'.encode('utf-8')
     zero_bytes = bytes.fromhex('000000000000')
@@ -96,19 +103,23 @@ def padData_test(ENIN):
     ENIN_bytes = bytes.fromhex(ENIN_hex_le)
     return info_bytes + zero_bytes + ENIN_bytes
 
+
 # Generate Rolling Proximity Identifier 
 def getRPI(rpik):
     paddedData = padData()
     return aes_encrypt(rpik, paddedData)
+
 
 # Generate Associated Encrypted Metadata Key
 def getAEMK(tek):
     info_bytes = 'EN-AEMK'.encode('utf-8')
     return hkdf(tek, '', info_bytes, 16)
 
+
 # Generate Associated Encrypted Metadata
 def getAEM(aemk, rpi, metadata):
     return aes_ctr_encrypt(aemk, rpi, metadata)
+
 
 # Decrypt Metadata
 def getMetadata(aemk, rpi, ciphered_metadata):

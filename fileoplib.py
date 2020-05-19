@@ -14,7 +14,7 @@ keptDays = 14
 
 def isCreatedToday(fileName):
     fileTime = datetime.datetime.fromtimestamp(os.path.getctime(fileName))        
-    now = datetime.datetime.now()
+    now = datetime.datetime.utcnow()
     if (now - fileTime).days == 0:
         return True
     else:
@@ -29,9 +29,9 @@ def isFolderExist(path):
 
 def csvFileName(isEnpt = False):
     if isEnpt:
-        return csvFile_prefix + datetime.datetime.now().strftime('%m%d') + "_Enpt.csv"
+        return csvFile_prefix + datetime.datetime.utcnow().strftime('%m%d') + "_Enpt.csv"
     else:
-        return csvFile_prefix + datetime.datetime.now().strftime('%m%d') + ".csv"
+        return csvFile_prefix + datetime.datetime.utcnow().strftime('%m%d') + ".csv"
 
 def create_csvFile(isEnpt = False):
     isFolderExist(csvPath)
@@ -72,8 +72,8 @@ def writeCSV(rowData, isEnpt = False):
 # Write Temporary Exposure Key and i
 def logTEK(tek,i):
     isFolderExist(logPath)
-    TEKFileName = TEKLogFile_prefix + datetime.datetime.now().strftime('%m%d') + ".log"
-    iFileName = TEKLogFile_prefix + "i_" + datetime.datetime.now().strftime('%m%d') + ".log"
+    TEKFileName = TEKLogFile_prefix + datetime.datetime.utcnow().strftime('%m%d') + ".log"
+    iFileName = TEKLogFile_prefix + "i_" + datetime.datetime.utcnow().strftime('%m%d') + ".log"
     if not(os.path.exists(logPath+'/' +TEKFileName) and os.path.exists(logPath+'/' +iFileName)):
         with open(logPath+'/' +TEKFileName, 'wb') as fb:
             fb.write(tek)
@@ -107,8 +107,8 @@ def genTEKFile():
 # Read Temporary Exposure Key
 def readTEK():
     isFolderExist(logPath)
-    TEKFileName = TEKLogFile_prefix + datetime.datetime.now().strftime('%m%d') + ".log"
-    iFileName = TEKLogFile_prefix + "i_" + datetime.datetime.now().strftime('%m%d') + ".log"
+    TEKFileName = TEKLogFile_prefix + datetime.datetime.utcnow().strftime('%m%d') + ".log"
+    iFileName = TEKLogFile_prefix + "i_" + datetime.datetime.utcnow().strftime('%m%d') + ".log"
     if os.path.exists(logPath+'/' +TEKFileName) and os.path.exists(logPath+'/' +iFileName):
         with open(logPath+'/' +TEKFileName, 'rb') as fb:
             tek = fb.read()
@@ -124,7 +124,7 @@ def delOldFiles(Path):
         if d[2] != []:
             for x in d[2]:
                 fileTime = datetime.datetime.fromtimestamp(os.path.getctime(os.path.join(Path,x)))
-                now = datetime.datetime.now()
+                now = datetime.datetime.utcnow()
                 if (now - fileTime).days > keptDays:
                     os.remove(os.path.join(Path,x))
     return 0

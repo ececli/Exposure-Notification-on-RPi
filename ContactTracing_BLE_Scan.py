@@ -4,19 +4,22 @@ import os
 import sys
 import time
 import fileoplib
+import random
 
 FLAG = '1a'
 CT_SERVICE_UUID = '0000fd6f'
-SCAN_WINDOW = 3.0
-NUM_DESC = 3 
-
+NUM_DESC = 3
+# Scan window is uniformly random 
+SCAN_WINDOW_MIN = 3.0
+SCAN_WINDOW_MAX = 4.0
 
 if __name__ == '__main__':
     
     ts = time.time()
     scanner = Scanner()
+    scan_Window = random.uniform(SCAN_WINDOW_MIN,SCAN_WINDOW_MAX)
     try:       
-        devices = scanner.scan(SCAN_WINDOW)
+        devices = scanner.scan(scan_Window)
         # devices = scanner.scan(SCAN_WINDOW, passive = True)
     except BTLEManagementError as err:
         print(err)

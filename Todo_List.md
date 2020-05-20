@@ -4,8 +4,6 @@ Here is the list of the things that have not been done yet. And the list of issu
 
 ## To-do List
 
-* Revise config file so that both bash script and Python can read and import it.
-* Change to the absolute path or current path. 
 * Add function to log the fail events.
 * Analyze the probability that the scanning can't find all the other advertisements. BTW, make a slide drawing the timeline with advertising and scanning. 
 * Test different scanning and advertising frequency. 
@@ -41,5 +39,9 @@ There are some possible solutions for this issue (by searching the Internet):
 2. Removing the judgment of Var1, which is from `... 0x00a 00`. 
 3. Integrate the Cryptography Specification from Apple and Google. Currently, the Rolling Proximity Identifier (RPI) is static and I just write some random numbers for it. The Metadata (including Version, TX power, and Reserved) is not encrypted. 
 4. Change the MAC address to the random non-resolvable address.
-5. Log the key
-6. Random scan time
+5. Log the key.
+6. Random scan time.
+7. Use configure file for Python.
+8. Change to the absolute path or current path.
+9. Detect transmit power every time the code runs, and write it into a file so that the encrypted version could encrypt it.
+10. Mark different channel when advertising, so that the receiver can distingush which channel the message comes from. 

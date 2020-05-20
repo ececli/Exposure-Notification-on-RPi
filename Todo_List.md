@@ -9,8 +9,7 @@ Here is the list of the things that have not been done yet. And the list of issu
 * Add function to log the fail events.
 * Analyze the probability that the scanning can't find all the other advertisements. BTW, make a slide drawing the timeline with advertising and scanning. 
 * Test different scanning and advertising frequency. 
-* Random scan time
-* Log the key (Lu's work)
+
 
 
 ## Current Issue(s)
@@ -42,3 +41,5 @@ There are some possible solutions for this issue (by searching the Internet):
 2. Removing the judgment of Var1, which is from `... 0x00a 00`. 
 3. Integrate the Cryptography Specification from Apple and Google. Currently, the Rolling Proximity Identifier (RPI) is static and I just write some random numbers for it. The Metadata (including Version, TX power, and Reserved) is not encrypted. 
 4. Change the MAC address to the random non-resolvable address.
+5. Log the key
+6. Random scan time

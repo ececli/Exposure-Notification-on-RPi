@@ -1,62 +1,86 @@
 #
 # fileoplib.py: file Operation Library.
 # by Chang Li. ANTD/ITL/NIST
-import cryptolib
 import os
-import datetime
 import csv
+import cryptolib
+import datetime
+import loadConfig as cf
 
-csvFile_prefix = "CTData_"
-TEKLogFile_prefix = 'CT_TEK_'
-logPath = os.getcwd()+'/KeyLog'
-csvPath = os.getcwd()+'/Data'
-keptDays = 14
 
 def isCreatedToday(fileName):
     fileTime = datetime.datetime.fromtimestamp(os.path.getctime(fileName))        
-    now = datetime.datetime.now()
+    now = datetime.datetime.utcnow()
     if (now - fileTime).days == 0:
         return True
     else:
         return False
 
 def isFolderExist(path):
+    # check if the folder is existed. If not, create the folder.
     if not os.path.exists(path):
         print('Path is not existed.')
         os.makedirs(path, exist_ok=True)
         print('Path created: ' + path)
         os.chmod(path,0o777)
 
-def csvFileName(isEnpt = False):
-    if isEnpt:
-        return csvFile_prefix + datetime.datetime.now().strftime('%m%d') + "_Enpt.csv"
-    else:
-        return csvFile_prefix + datetime.datetime.now().strftime('%m%d') + ".csv"
+# def csvFileName(isEnpt = False):
+#     if isEnpt:
+#         return cf.csvFile_prefix + datetime.datetime.utcnow().strftime('%m%d') + "_Enpt.csv"
+#     else:
+#         return cf.csvFile_prefix + datetime.datetime.utcnow().strftime('%m%d') + ".csv"
+# 
+# def create_csvFile(isEnpt = False):
+#     isFolderExist(cf.csvPath)
+#     fileName = csvFileName(isEnpt)
+#     if not os.path.exists(cf.csvPath+'/' +fileName):
+#         with open(cf.csvPath+'/' +fileName,'w') as f:
+#             csv_write = csv.writer(f)
+#             if isEnpt:
+#                 csv_head = ["Timestamp","MAC","RSSI","UUID","RPI","AEM"]
+#             else:
+#                 csv_head = ["Timestamp","MAC","RSSI","UUID","RPI","Version","TX_Power","Reserved"]
+#             csv_write.writerow(csv_head)
+#         
+#     os.chmod(cf.csvPath+'/' +fileName,0o666)
+#
+# def writeCSV(rowData, isEnpt = False):
+#     isFolderExist(cf.csvPath)
+#     fileName = csvFileName(isEnpt)
+#     if not(os.path.exists(cf.csvPath+'/' +fileName)):
+#         print(os.path.exists(cf.csvPath+'/' +fileName))
+#         print('file does not exist')
+#         create_csvFile()
+#         
+#     with open(cf.csvPath+'/' + fileName,'a') as f:
+#         csv_write = csv.writer(f)
+#         csv_write.writerow(rowData)
 
-def create_csvFile(isEnpt = False):
-    isFolderExist(csvPath)
-    fileName = csvFileName(isEnpt)
-    if not os.path.exists(csvPath+'/' +fileName):
-        with open(csvPath+'/' +fileName,'w') as f:
+
+def csvFileName():
+    return cf.csvFile_prefix + datetime.datetime.utcnow().strftime('%m%d') + ".csv"
+
+
+def create_csvFile():
+    isFolderExist(cf.csvPath)
+    fileName = csvFileName()
+    if not os.path.exists(cf.csvPath+'/' +fileName):
+        with open(cf.csvPath+'/' +fileName,'w') as f:
             csv_write = csv.writer(f)
-            if isEnpt:
-                csv_head = ["Timestamp","MAC","RSSI","UUID","RPI","AEM"]
-            else:
-                csv_head = ["Timestamp","MAC","RSSI","UUID","RPI","Version","TX_Power","Reserved"]
+            csv_head = ["Timestamp","MAC","RSSI","UUID","RPI","METADATA"]
             csv_write.writerow(csv_head)
         
-    os.chmod(csvPath+'/' +fileName,0o666)
+    os.chmod(cf.csvPath+'/' +fileName,0o666)
     
-    
-def writeCSV(rowData, isEnpt = False):
-    isFolderExist(csvPath)
-    fileName = csvFileName(isEnpt)
-    if not(os.path.exists(csvPath+'/' +fileName)):
-        print(os.path.exists(csvPath+'/' +fileName))
+def writeCSV(rowData):
+    isFolderExist(cf.csvPath)
+    fileName = csvFileName()
+    if not(os.path.exists(cf.csvPath+'/' +fileName)):
+        print(os.path.exists(cf.csvPath+'/' +fileName))
         print('file does not exist')
         create_csvFile()
         
-    with open(csvPath+'/' + fileName,'a') as f:
+    with open(cf.csvPath+'/' + fileName,'a') as f:
         csv_write = csv.writer(f)
         csv_write.writerow(rowData)
 
@@ -69,15 +93,23 @@ def writeCSV(rowData, isEnpt = False):
 #         fb.write(tek)
 #     return True
 
+
+def TEKFileName():
+    return cf.TEKLogFile_prefix + datetime.datetime.utcnow().strftime('%m%d') + ".log"
+
+def iFileName():
+    return cf.TEKLogFile_prefix + "i_" + datetime.datetime.utcnow().strftime('%m%d') + ".log"
+    
+
 # Write Temporary Exposure Key and i
 def logTEK(tek,i):
-    isFolderExist(logPath)
-    TEKFileName = TEKLogFile_prefix + datetime.datetime.now().strftime('%m%d') + ".log"
-    iFileName = TEKLogFile_prefix + "i_" + datetime.datetime.now().strftime('%m%d') + ".log"
-    if not(os.path.exists(logPath+'/' +TEKFileName) and os.path.exists(logPath+'/' +iFileName)):
-        with open(logPath+'/' +TEKFileName, 'wb') as fb:
+    isFolderExist(cf.logPath)
+    TEKFile = cf.logPath+'/' +TEKFileName()
+    iFile = cf.logPath+'/' +iFileName()
+    if not(os.path.exists(TEKFile) and os.path.exists(iFile)):
+        with open(TEKFile, 'wb') as fb:
             fb.write(tek)
-        with open(logPath+'/' +iFileName, 'w') as f:
+        with open(iFile, 'w') as f:
             f.write(str(i))
         return True
     return False
@@ -88,9 +120,8 @@ def genTEKFile():
     print(i)
     success = logTEK(tek,i)
     # After generating tek, log the tek and delete the old files
-    # logTEK(fileName)
-    delOldFiles(logPath)
-    delOldFiles(csvPath)
+    delOldFiles(cf.logPath)
+    delOldFiles(cf.csvPath)
     return tek, success
 
 
@@ -106,11 +137,11 @@ def genTEKFile():
 
 # Read Temporary Exposure Key
 def readTEK():
-    isFolderExist(logPath)
-    TEKFileName = TEKLogFile_prefix + datetime.datetime.now().strftime('%m%d') + ".log"
-    iFileName = TEKLogFile_prefix + "i_" + datetime.datetime.now().strftime('%m%d') + ".log"
-    if os.path.exists(logPath+'/' +TEKFileName) and os.path.exists(logPath+'/' +iFileName):
-        with open(logPath+'/' +TEKFileName, 'rb') as fb:
+    isFolderExist(cf.logPath)
+    TEKFile = cf.logPath+'/' +TEKFileName()
+    iFile = cf.logPath+'/' +iFileName()
+    if os.path.exists(TEKFile) and os.path.exists(iFile):
+        with open(TEKFile, 'rb') as fb:
             tek = fb.read()
         return tek
     tek, success = genTEKFile()
@@ -124,15 +155,24 @@ def delOldFiles(Path):
         if d[2] != []:
             for x in d[2]:
                 fileTime = datetime.datetime.fromtimestamp(os.path.getctime(os.path.join(Path,x)))
-                now = datetime.datetime.now()
-                if (now - fileTime).days > keptDays:
+                now = datetime.datetime.utcnow()
+                if (now - fileTime).days > cf.keptDays:
                     os.remove(os.path.join(Path,x))
     return 0
 
 
-def writeConfig(MAC,rpi_hex,aem_hex,fileName):
-    with open(fileName,'w+') as fb:
+def writeConfig(MAC,rpi_hex,aem_hex):
+    with open(cf.RPI_AEM_fileName,'w+') as fb:
         fb.write("export MAC=\""+MAC+"\"\n")
         fb.write("export RPI=\""+' '.join(a+b for a,b in zip(rpi_hex[::2], rpi_hex[1::2]))+"\"\n")
         fb.write("export AEM=\""+' '.join(a+b for a,b in zip(aem_hex[::2], aem_hex[1::2]))+"\"")
     return True
+
+
+def readMeta():   
+    if os.path.exists(cf.META_fileName):
+        with open(cf.META_fileName, 'r') as f:
+            metadata_hex = f.read()
+        return bytes.fromhex(metadata_hex)
+    else:
+        return bytes.fromhex(cf.META_default)

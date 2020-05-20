@@ -1,19 +1,12 @@
-# Unencrypted version
-from bluepy.btle import Scanner, BTLEManagementError
+# Unified version
 import os
-import sys
 import time
-import fileoplib
+import sys
 import random
+from bluepy.btle import Scanner, BTLEManagementError
+import fileoplib
 import loadConfig as cf
 
-isEnpt = False
-# FLAG = '1a'
-# CT_SERVICE_UUID = '0000fd6f'
-# NUM_DESC = 3
-# # Scan window is uniformly random 
-# SCAN_WINDOW_MIN = 3.0
-# SCAN_WINDOW_MAX = 4.0
 
 if __name__ == '__main__':
     
@@ -26,8 +19,9 @@ if __name__ == '__main__':
     except BTLEManagementError as err:
         print(err)
         sys.exit(1)
-
-    fileoplib.create_csvFile(isEnpt)
+        
+        
+    fileoplib.create_csvFile()
 
     for device in devices:
         # print("Device %s (%s), RSSI=%d dB" % (device.addr, device.addrType, device.rssi))
@@ -40,9 +34,10 @@ if __name__ == '__main__':
                 ServiceData = scanData[2][2]
                 UUID = ServiceData[2:4] + ServiceData[0:2]
                 RCI = ServiceData[4:36]
-                Version = ServiceData[36:38]
-                TXPower = ServiceData[38:40]
-                Reserved = ServiceData[40:44]
-                rowData = [ts, device.addr, device.rssi, UUID, RCI, Version, TXPower, Reserved]             
-                fileoplib.writeCSV(rowData,isEnpt)
+                META = ServiceData[36:44]
+                rowData = [ts, device.addr, device.rssi, UUID, RCI, META]             
+                fileoplib.writeCSV(rowData)
                 print(rowData)
+
+    
+

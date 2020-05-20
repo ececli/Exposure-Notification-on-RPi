@@ -4,27 +4,16 @@ import random
 from os import path
 import fileoplib
 
-# TEK_fileName = 'TEK.txt'
-META_fileName = 'MetaData.txt'
-# RPI_AEM_fileName = "MAC_RPI_AEM.config"
-# RPI_AEM_logFileName = "GenRPI.log"
 # Read Temporary Exposure Key
 tek = fileoplib.readTEK()
 print('TEK: ', tek)
 # Read Metadata
-if path.exists(META_fileName):
-    with open(META_fileName, 'r') as fb:
-        metadata = fb.read()
-else:
-    metadata = bytes.fromhex('400C0000')
-# Get Rolling Proximity Identifier Key
-# rpik = cryptolib.getRPIK(tek)
+metadata = fileoplib.readMeta()
+print('META: ', metadata.hex())
 # Get Rolling Proximity Identifier
 rpi = cryptolib.getRPI(cryptolib.getRPIK(tek))
 rpi_hex = rpi.hex()
 print('RPI: ', rpi_hex)
-# Get Associated Encrypted Metadata Key
-# aemk = cryptolib.getAEMK(tek)
 # Get Associated Encrypted Metadata
 aem = cryptolib.getAEM(cryptolib.getAEMK(tek), rpi, metadata)
 aem_hex = aem.hex()
@@ -41,6 +30,3 @@ while True:
         break 
 print('MAC: ', MAC)    
 fileoplib.writeConfig(MAC,rpi_hex,aem_hex)
-
-# with open(RPI_AEM_logFileName,'a+') as fb:
-    # fb.write()

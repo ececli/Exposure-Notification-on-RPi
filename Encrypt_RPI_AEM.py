@@ -6,7 +6,7 @@ import fileoplib
 
 # TEK_fileName = 'TEK.txt'
 META_fileName = 'MetaData.txt'
-RPI_AEM_fileName = "MAC_RPI_AEM.config"
+# RPI_AEM_fileName = "MAC_RPI_AEM.config"
 # RPI_AEM_logFileName = "GenRPI.log"
 # Read Temporary Exposure Key
 tek = fileoplib.readTEK()
@@ -40,7 +40,7 @@ while True:
     if not(MAC == '00 00 00 00 00 00' or MAC == 'ff ff ff ff ff 3f'):
         break 
 print('MAC: ', MAC)    
-fileoplib.writeConfig(MAC,rpi_hex,aem_hex,RPI_AEM_fileName)  
+fileoplib.writeConfig(MAC,rpi_hex,aem_hex)
 
 # with open(RPI_AEM_logFileName,'a+') as fb:
     # fb.write()

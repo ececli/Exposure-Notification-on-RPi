@@ -2,7 +2,7 @@
 . ./ContactTracing_BLE.conf
 
 log_header(){
-	echo "Timestamp,isScanning,Counter,isSuccessful,isFinished" > $FULLLOG_FILENAME
+	echo $LOG_CSVHEADER > $FULLLOG_FILENAME
 }
 
 log_startAdv(){

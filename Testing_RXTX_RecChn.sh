@@ -21,7 +21,7 @@ initBLE
 log_header
 Scanning
 beginningTime=$(date +%s)
-endTime=`expr $beginningTime + 90`
+endTime=`expr $beginningTime + 150`
 echo $endTime, $beginningTime
 while [ $(date +%s)  -lt $endTime ]
 do

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 a=2
-b=3
-c=$( awk -v min=$a -v max=$b 'BEGIN{srand(); print min+rand()*(max-min)}' )
+b=5
+c=$( awk -v min=$a -v max=$b 'BEGIN{ "date +%N" | getline seed; srand(seed); print min+rand()*(max-min)}' )
 echo $c
 #echo $(date +%s)
 #sleep $c

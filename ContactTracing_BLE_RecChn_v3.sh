@@ -43,7 +43,9 @@ do
 	echo "BLE Advertisement " $Adv_Counter
 	let "Adv_Counter++"
     fi
-    sleep $ADV_INTV
+    # sleep $ADV_INTV
+    randAdvTime=$( awk -v min=$ADV_INTV -v max=$ADV_INTV_RANDMAX 'BEGIN{ "date +%N" | getline seed; srand(seed); print min+rand()*(max-min)}' )
+    sleep $randAdvTime
     Advertising_stop
     # begin scanning
     log_startScan $Scan_Counter

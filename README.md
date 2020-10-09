@@ -40,8 +40,8 @@ $ sudo pip3 install pyaes
 ```
 Next, make sure the bash scripts (.sh) are executable. If not, use the following commands:
 ```
-$ chmod +x ContractTracing_BLE.sh
-$ chmod +x ContractTracing_BLE_Enpt.sh
+$ chmod +x ContactTracing_BLE.sh
+$ chmod +x ContactTracing_BLE_Enpt.sh
 ```
 
 ### Using the Version with Encryption
@@ -53,7 +53,7 @@ This line ensures that the system will execute `Encrypt_RPI_AEM.py` file every 1
 
 You can wait after the system executes `Encrypt_RPI_AEM.py` once, or you can manually execute `Encrypt_RPI_AEM.py` to generate the TEK. Once the TEK is generated, you can run the code by typing
 ```
-$ ./ContractTracing_BLE_Enpy.sh
+$ ./ContactTracing_BLE_Enpy.sh
 ```
 The result is stored in a `CTData_XXXX.csv` file in the `Data` folder. 
 
@@ -61,7 +61,7 @@ The result is stored in a `CTData_XXXX.csv` file in the `Data` folder.
 
 If you do not need the version with encryption, there is no need to set up `Encrypt_RPI_AEM.py`. Instead, it is recommended that you change the RPI in the `STATIC_RPI.conf`. Otherwise, you will see multiple devices that have the same RPI. To execute the code, run
 ```
-$ ./ContractTracing_BLE.sh
+$ ./ContactTracing_BLE.sh
 ```
 The result is stored in a `CTData_XXXX.csv` file in the `Data` folder. 
 
